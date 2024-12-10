@@ -9,7 +9,7 @@ import Head from "next/head";
 
 export default function Patient() {
   const router = useRouter();
-  const { name, slug_sc, id, slug } = router.query;
+  const { slug_sc, id } = router.query;
   const [serviceDetail, setServiceDetail] = useState(null);
   const [patientDetail, setPatientDetail] = useState(null); // Changed to object
   const [loading, setLoading] = useState(true);
@@ -17,7 +17,6 @@ export default function Patient() {
 
   const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
   const storageUrl = process.env.NEXT_PUBLIC_API_STORAGE_URL;
-  const mainUrl = process.env.NEXT_PUBLIC_API_MAIN_URL;
 
   useEffect(() => {
     const fetchSettings = async () => {
@@ -100,92 +99,17 @@ export default function Patient() {
     );
   }
 
-  const schemaData = {
-      "@context": "https://schema.org",
-      "@type": "WebPage",
-      name: `${patientDetail.name} - NMW Aesthetic Clinic`,
-      description: `${patientDetail.description}`,
-      url: `${mainUrl}layanan/${name}/${slug}/${slug_sc}/${id}`,
-      publisher: {
-        "@type": "Organization",
-        name: "NMW Aesthetic Clinic",
-        logo: {
-          "@type": "ImageObject",
-          url: `${storageUrl}/${settings.logo}`
-        }
-      },
-      mainEntityOfPage: {
-        "@type": "WebPage",
-        "@id": `${mainUrl}layanan/${name}/${slug}/${slug_sc}/${id}`
-      },
-      breadcrumb: {
-        "@type": "BreadcrumbList",
-        itemListElement: [
-          {
-            "@type": "ListItem",
-            position: 1,
-            name: "Beranda",
-            item: `${mainUrl}`
-          },
-          {
-            "@type": "ListItem",
-            position: 2,
-            name: "Layanan",
-            item: `${mainUrl}layanan`
-          },
-          {
-            "@type": "ListItem",
-            position: 3,
-            name: `${name}`,
-            item:  `${mainUrl}layanan/${name}`
-          },
-          {
-            "@type": "ListItem",
-            position: 4,
-            name: `${slug}`,
-            item: `${mainUrl}layanan/${name}/${slug}`
-          },
-          {
-            "@type": "ListItem",
-            position: 5,
-            name: `${slug_sc}`,
-            item: `${mainUrl}layanan/${name}/${slug}/${slug_sc}`
-          },
-          {
-            "@type": "ListItem",
-            position: 6,
-            name: `${patientDetail.name}`,
-            item: `${mainUrl}layanan/${name}/${slug}/${slug_sc}/${patientDetail.id}`
-          }
-        ]
-      }
-  };
-
   return (
     <>
         <Head>
             <title>{patientDetail.name} | NMW Aesthetic Clinic</title>
             <meta name="description" content={patientDetail.description} />
-            <meta name="keywords" content="layanan medis, perawatan kulit, bedah plastik, konsultasi kesehatan, perawatan kecantikan, NMW Clinic, layanan kecantikan, perawatan wajah, estetika medis, klinik estetika, perawatan anti-aging, operasi plastik, perawatan rambut, perawatan tubuh, terapi kecantikan, klinik kecantikan NMW, dokter kecantikan, solusi kecantikan, layanan kecantikan medis, klinik bedah plastik, rejuvenasi kulit, konsultasi bedah plastik" />
-
             <meta property="og:title" content={patientDetail.name} />
             <meta property="og:description" content={patientDetail.description} />
-            <meta property="og:type" content="website" />
-            <meta property="og:url" content={`${mainUrl}layanan/${name}/${slug}/${slug_sc}/${patientDetail.id}`} />
-            <meta property="og:image" content={`${storageUrl}/${patientDetail.image}`} />
-
-            <meta name="twitter:card" content="summary_large_image" />
+            <meta property="og:type" content="Layanan"/>
             <meta name="twitter:title" content={patientDetail.name} />
             <meta name="twitter:description" content={patientDetail.description} />
-            <meta name="twitter:image" content={`${storageUrl}/${patientDetail.image}`} />
-
-            <link rel="canonical" href={`${mainUrl}layanan/${name}/${slug}/${slug_sc}/${patientDetail.id}`} />
-
-            <script type="application/ld+json">
-              {JSON.stringify(schemaData)}
-            </script>
         </Head>
-
       {/* Banner */}
       <div className={banner.banner}>
         <img

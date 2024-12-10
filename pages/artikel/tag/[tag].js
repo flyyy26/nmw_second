@@ -16,31 +16,8 @@ export default function TagsPage() {
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
     const [loading, setLoading] = useState(true); // Loading state to prevent hydration issues
-    const [settings, setSettings] = useState([]);
 
     const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
-    const mainUrl = process.env.NEXT_PUBLIC_API_MAIN_URL;
-    const storageUrl = process.env.NEXT_PUBLIC_API_STORAGE_URL;
-
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const response = await fetch(`${baseUrl}/setting`);
-                const data = await response.json();
-                console.log('Fetched data:', data);  // Log the entire response
-  
-                if (data && data.social_media) {
-                    setSettings(data); // Set the entire response object to settings
-                } else {
-                    console.error('No social_media data found:', data);
-                }
-            } catch (error) {
-                console.error('Error fetching settings:', error);
-            }
-        };
-  
-        fetchData();
-    }, []);
 
     useEffect(() => {
         const fetchArticles = async () => {
@@ -96,74 +73,17 @@ export default function TagsPage() {
         );
     }
 
-    const schemaData = {
-        "@context": "https://schema.org",
-        "@type": "WebPage",
-        name: `Tag ${tag}}`, // Pastikan nama halaman atau artikel yang relevan
-        description: "Artikel terkait layanan estetika dan perawatan kulit dari NMW Aesthetic Clinic.", // Tambahkan deskripsi yang relevan untuk SEO
-        url: `${mainUrl}artikel/tag/${tag}`, // URL halaman saat ini
-        publisher: {
-          "@type": "Organization",
-          name: "NMW Aesthetic Clinic",
-          logo: {
-            "@type": "ImageObject",
-            url: `${storageUrl}/${settings.logo}` // Pastikan ini mengarah ke logo yang benar
-          }
-        },
-        mainEntityOfPage: {
-          "@type": "WebPage",
-          "@id": `${mainUrl}artikel/tag/${tag}` // Mengidentifikasi URL halaman ini
-        },
-        breadcrumb: {
-            "@type": "BreadcrumbList",
-            itemListElement: [
-              {
-                "@type": "ListItem",
-                position: 1,
-                name: "Beranda",
-                item: `${mainUrl}`
-              },
-              {
-                "@type": "ListItem",
-                position: 2,
-                name: "Artikel",
-                item: `${mainUrl}artikel`
-              },
-              {
-                "@type": "ListItem",
-                position: 3,
-                name: `${tag}`,
-                item: `${mainUrl}artikel/${tag}`
-              }
-            ]
-          }
-      }; 
-
     return (
         <>
             <Head>
                 <title>{`Tag ${tag}`} | NMW Aesthetic Clinic</title>
                 <meta name="description" content="Artikel NMW Aesthetic Clinic" />
-                <meta name="keywords" content="layanan medis, perawatan kulit, bedah plastik, konsultasi kesehatan, perawatan kecantikan, NMW Clinic, layanan kecantikan, perawatan wajah, estetika medis, klinik estetika, perawatan anti-aging, operasi plastik, perawatan rambut, perawatan tubuh, terapi kecantikan, klinik kecantikan NMW, dokter kecantikan, solusi kecantikan, layanan kecantikan medis, klinik bedah plastik, rejuvenasi kulit, konsultasi bedah plastik" />
-
-                <meta property="og:title" content={`Tag ${tag}`} />
+                <meta property="og:title" content="Artikel" />
                 <meta property="og:description" content="Artikel NMW Aesthetic Clinic" />
-                <meta property="og:type" content="website" />
-                <meta property="og:url" content={`${mainUrl}artikel/tag/${tag}`} />
-                <meta property="og:image" content={`${storageUrl}/${settings.favicon}`}/>
-
-                <meta name="twitter:card" content="summary_large_image" />
-                <meta name="twitter:title" content={`Tag ${tag}`} />
+                <meta property="og:type" content="article" />
+                <meta name="twitter:title" content="Artikel" />
                 <meta name="twitter:description" content="Artikel NMW Aesthetic Clinic" />
-                <meta name="twitter:image" content={`${storageUrl}/${settings.favicon}`}/>
-
-                <link rel="canonical" href={`${mainUrl}artikel/tag/${tag}`} />
-
-                <script type="application/ld+json">
-                    {JSON.stringify(schemaData)}
-                </script>
             </Head>
-
             <div className={styles.article_section}>
                 <div className={`${styles.heading_section} ${styles.heading_section_start}`}>
                     <h1>Artikel dengan tag <font className={styles.tag_heading}>{tag}</font></h1>

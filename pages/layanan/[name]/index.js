@@ -5,6 +5,7 @@ import styles from "@/styles/Layanan.module.css";
 import Link from 'next/link';
 import { FaWhatsapp } from "react-icons/fa";
 import loadingStyles from "@/styles/Loading.module.css";
+import not from "@/styles/Not.module.css";
 import Head from 'next/head';
 
 export default function Layanan() {
@@ -16,33 +17,11 @@ export default function Layanan() {
     const [typeServices, setTypeServices] = useState([]);
     const [subServices, setSubServices] = useState([]);
     const [subTwoServices, setSubTwoServices] = useState([]);
-    const [loading, setLoading] = useState(true);
-
-    const [settings, setSettings] = useState([]);
+    const [loading, setLoading] = useState(true); // Tambahkan state loading
+    const [showPopup, setShowPopup] = useState(false);
 
     const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
     const storageUrl = process.env.NEXT_PUBLIC_API_STORAGE_URL;
-    const mainUrl = process.env.NEXT_PUBLIC_API_MAIN_URL;
-
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const response = await fetch(`${baseUrl}/setting`);
-                const data = await response.json();
-                console.log('Fetched data:', data);  // Log the entire response
-  
-                if (data && data.social_media) {
-                    setSettings(data); // Set the entire response object to settings
-                } else {
-                    console.error('No social_media data found:', data);
-                }
-            } catch (error) {
-                console.error('Error fetching settings:', error);
-            }
-        };
-  
-        fetchData();
-    }, []);
 
     // Fetch data layanan lainnya
     useEffect(() => {
@@ -199,72 +178,16 @@ export default function Layanan() {
         return <p>Layanan tidak ditemukan.</p>; // Pesan error jika layanan tidak ditemukan
     }
 
-    const schemaData = {
-        "@context": "https://schema.org",
-        "@type": "WebPage",
-        name: `${serviceDetail.name} - NMW Aesthetic Clinic`,
-        description: `${serviceDetail.description}`,
-        url: `${mainUrl}layanan/${encodeURIComponent(serviceDetail.name)}`,
-        publisher: {
-          "@type": "Organization",
-          name: "NMW Aesthetic Clinic",
-          logo: {
-            "@type": "ImageObject",
-            url: `${storageUrl}/${settings.logo}`
-          }
-        },
-        mainEntityOfPage: {
-          "@type": "WebPage",
-          "@id": `${mainUrl}layanan/${encodeURIComponent(serviceDetail.name)}`
-        },
-        breadcrumb: {
-            "@type": "BreadcrumbList",
-            itemListElement: [
-              {
-                "@type": "ListItem",
-                position: 1,
-                name: "Beranda",
-                item: `${mainUrl}`
-              },
-              {
-                "@type": "ListItem",
-                position: 2,
-                name: "Layanan",
-                item: `${mainUrl}layanan`
-              },
-              {
-                "@type": "ListItem",
-                position: 3,
-                name: `${serviceDetail.name}`,
-                item:  `${mainUrl}layanan/${encodeURIComponent(serviceDetail.name)}`
-              }
-            ]
-        }
-    };
-
     return (
         <>
             <Head>
                 <title>{serviceDetail.name} | NMW Aesthetic Clinic</title>
                 <meta name="description" content={serviceDetail.description} />
-                <meta name="keywords" content="layanan medis, perawatan kulit, bedah plastik, konsultasi kesehatan, perawatan kecantikan, NMW Clinic, layanan kecantikan, perawatan wajah, estetika medis, klinik estetika, perawatan anti-aging, operasi plastik, perawatan rambut, perawatan tubuh, terapi kecantikan, klinik kecantikan NMW, dokter kecantikan, solusi kecantikan, layanan kecantikan medis, klinik bedah plastik, rejuvenasi kulit, konsultasi bedah plastik" />
-
                 <meta property="og:title" content={serviceDetail.name} />
                 <meta property="og:description" content={serviceDetail.description} />
-                <meta property="og:type" content="website" />
-                <meta property="og:url" content={`${mainUrl}${encodeURIComponent(serviceDetail.name)}`}  />
-                <meta property="og:image" content={`${storageUrl}/${serviceDetail.image}`} />
-
-                <meta name="twitter:card" content="summary_large_image" />
+                <meta property="og:type" content="Layanan" />
                 <meta name="twitter:title" content={serviceDetail.name} />
                 <meta name="twitter:description" content={serviceDetail.description} />
-                <meta name="twitter:image" content={`${storageUrl}/${serviceDetail.image}`} />
-
-                <link rel="canonical" href={`${mainUrl}${encodeURIComponent(serviceDetail.name)}`} />
-
-                <script type="application/ld+json">
-                {JSON.stringify(schemaData)}
-                </script>
             </Head>
             <div className={banner.banner}>
                 <img src={`${storageUrl}/${serviceDetail.image}`} alt={serviceDetail.name} />

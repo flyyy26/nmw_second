@@ -6,31 +6,8 @@ import Head from "next/head";
 export default function Achievment(){
 
     const [achievments, setAchievments] = useState([]);
-    const [settings, setSettings] = useState([]);
-
     const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
-    const mainUrl = process.env.NEXT_PUBLIC_API_MAIN_URL;
     const storageUrl = process.env.NEXT_PUBLIC_API_STORAGE_URL;
-
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const response = await fetch(`${baseUrl}/setting`);
-                const data = await response.json();
-                console.log('Fetched data:', data);  // Log the entire response
-  
-                if (data && data.social_media) {
-                    setSettings(data); // Set the entire response object to settings
-                } else {
-                    console.error('No social_media data found:', data);
-                }
-            } catch (error) {
-                console.error('Error fetching settings:', error);
-            }
-        };
-  
-        fetchData();
-      }, []);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -63,66 +40,18 @@ export default function Achievment(){
         setIsOpen(false);
     };
 
-    const schemaData = {
-        "@context": "https://schema.org",
-        "@type": "WebPage",
-        name: `Penghargaan - NMW Aesthetic Clinic`,
-        description: `Lihat daftar penghargaan yang telah diraih oleh NMW Aesthetic Clinic sebagai bukti komitmen kami dalam memberikan layanan kesehatan terbaik dan profesional`,
-        url: `${mainUrl}achievment`,
-        publisher: {
-        "@type": "Organization",
-        name: "NMW Aesthetic Clinic",
-        logo: {
-            "@type": "ImageObject",
-            url: `${mainUrl}images/banner_award.png`
-        }
-        },
-        mainEntityOfPage: {
-        "@type": "WebPage",
-        "@id": `${mainUrl}achievment`
-        },
-        breadcrumb: {
-            "@type": "BreadcrumbList",
-            itemListElement: [
-                {
-                "@type": "ListItem",
-                    position: 1,
-                    name: "Home",
-                    item: `${mainUrl}`
-                },
-                {
-                "@type": "ListItem",
-                position: 2,
-                    name: "Achievment",
-                    item: `${mainUrl}achievment`
-                }
-            ]
-        }
-    };
-
     return(
         <>
             <Head>
-                <title>Penghargaan | NMW Aesthetic Clinic</title>
-                <meta name="description" content="Lihat daftar penghargaan yang telah diraih oleh NMW Aesthetic Clinic sebagai bukti komitmen kami dalam memberikan layanan kesehatan terbaik dan profesional" />
-                <meta name="keywords" content="pencapaian NMW Clinic, penghargaan klinik kecantikan, prestasi NMW Aesthetic Clinic, penghargaan layanan medis, pencapaian klinik estetika, inovasi medis, pengakuan industri kecantikan, sertifikasi kecantikan, penghargaan layanan terbaik, prestasi klinik kecantikan, penghargaan perawatan kulit, pencapaian layanan kesehatan, penghargaan dokter kecantikan, pengakuan klinik medis, pencapaian global NMW Clinic" />
-
-                <meta property="og:title" content="Achievment NMW Aesthetic Clinic"  />
-                <meta property="og:description" content="Lihat daftar penghargaan yang telah diraih oleh NMW Aesthetic Clinic sebagai bukti komitmen kami dalam memberikan layanan kesehatan terbaik dan profesional" />
-                <meta property="og:type" content="website" />
-                <meta property="og:url" content={`${mainUrl}achievment`} />
-                <meta property="og:image" content={`${mainUrl}images/banner_award.png`} />
-
-                <meta name="twitter:card" content="summary_large_image" />
+                <title>Achievment | NMW Aesthetic Clinic</title>
+                <meta name="description" content="Lihat daftar penghargaan yang telah diraih oleh NMW Aesthetic Clinic sebagai bukti komitmen kami dalam memberikan layanan kesehatan terbaik dan profesional." />
+                <meta property="og:title" content="Achievment NMW Aesthetic Clinic" />
+                <meta property="og:description" content="NMW Aesthetic Clinic dengan bangga mempersembahkan penghargaan yang telah kami terima atas dedikasi dan kualitas layanan kami di dunia medis." />
+                <meta property="og:type" content="Achievment Website"/>
                 <meta name="twitter:title" content="Achievment NMW Aesthetic Clinic" />
-                <meta name="twitter:description" content="Lihat daftar penghargaan yang telah diraih oleh NMW Aesthetic Clinic sebagai bukti komitmen kami dalam memberikan layanan kesehatan terbaik dan profesional" />
-                <meta name="twitter:image" content={`${mainUrl}images/banner_award.png`} />
-
-                <link rel="canonical" href={`${mainUrl}achievment`} />
-
-                <script type="application/ld+json">
-                {JSON.stringify(schemaData)}
-                </script>
+                <meta name="twitter:description" content="Lihat daftar penghargaan yang telah diraih oleh NMW Aesthetic Clinic sebagai bukti komitmen kami dalam memberikan layanan kesehatan terbaik dan profesional." />
+                <meta property="og:url" content="{{ url()->current() }}" />
+                <meta property="og:image" content="{{ asset('images/banner_award.png') }}" />
             </Head>
             <div className={banner.banner}>
                 <img src="images/banner_award.png" alt="Layanan Nmw Aesthetic Clinic"/>

@@ -26,8 +26,6 @@ export default function Header() {
 
     const [isLoading, setIsLoading] = useState(true); // State to track loading state
 
-    const mainUrl = process.env.NEXT_PUBLIC_API_MAIN_URL;
-
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -44,7 +42,7 @@ export default function Header() {
         }; 
  
         fetchData();
-    }, [baseUrl]);
+    }, []);
 
     // Function to handle click outside of dropdown
     const handleClickOutside = (event) => {
@@ -122,7 +120,7 @@ export default function Header() {
         };
 
         fetchData();
-    }, [baseUrl]);
+    }, []);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -181,13 +179,32 @@ export default function Header() {
     return (
         <>
         <Head>
+            <title>Official NMW - Klinik Aesthetic, Skincare, Dermatologi Jakarta</title>
+
+            <meta name="description" content="NMW Adalah merek Aesthetic, Skincare, Dermatology and Wellness Clinic yang berbasis di Jakarta, Indonesia. Jam Operasional Klinik 09:00 - 20:00" />
+
             <meta name="google-site-verification" content="iYG_LhQQBgtnR0eh5LxjemSAR_8cAHBnM7WZ_Dqq_N8" />
+            
+            <meta name="keywords" content="klinik kesehatan, layanan medis, konsultasi kesehatan, NMW Clinic, perawatan medis, bedah plastik" />
+
+            <meta property="og:title" content="NMW Clinic" />
+            <meta property="og:description" content={settings.meta_description} />
+            <meta property="og:image" content={`${storageUrl}/${settings.favicon}`} />
+            <meta property="og:url" content={settings.site_url} />
+            <meta property="og:type" content="website" />
+            
+            <meta name="twitter:card" content="summary_large_image" />
+            <meta name="twitter:title" content="NMW Clinic" />
+            <meta name="twitter:description" content={settings.meta_description} />
+            <meta name="twitter:image" content={`${storageUrl}/${settings.favicon}`} />
 
             <meta name="viewport" content="width=device-width, initial-scale=1" />
 
             <link rel="icon" href={`${storageUrl}/${settings.favicon}`} />
 
             <meta name="robots" content="index, follow" />
+
+            <link rel="canonical" href="https://www.nmwclinic.co.id/" />
         </Head>
 
         <div className={styles.header}>

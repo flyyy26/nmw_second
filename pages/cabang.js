@@ -9,32 +9,8 @@ import Head from "next/head";
 
 export default function Cabang(){
     const [branchs, setBranchs] = useState([]);
-    const [loading, setLoading] = useState(true);
-    const [settings, setSettings] = useState([]);
-
     const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
-    const mainUrl = process.env.NEXT_PUBLIC_API_MAIN_URL;
-    const storageUrl = process.env.NEXT_PUBLIC_API_STORAGE_URL;
-
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const response = await fetch(`${baseUrl}/setting`);
-                const data = await response.json();
-                console.log('Fetched data:', data);  // Log the entire response
-  
-                if (data && data.social_media) {
-                    setSettings(data); // Set the entire response object to settings
-                } else {
-                    console.error('No social_media data found:', data);
-                }
-            } catch (error) {
-                console.error('Error fetching settings:', error);
-            }
-        };
-  
-        fetchData();
-      }, []);
+    const [loading, setLoading] = useState(true); // Tambahkan state loading
 
     useEffect(() => {
         const fetchData = async () => {
@@ -69,66 +45,18 @@ export default function Cabang(){
         );
     }
 
-    const schemaData = {
-        "@context": "https://schema.org",
-        "@type": "WebPage",
-        name: `Cabang - NMW Aesthetic Clinic`,
-        description: `Alamat Cabang & Kantor NMW Aesthetic Clinic`,
-        url: `${mainUrl}cabang`,
-        publisher: {
-          "@type": "Organization",
-          name: "NMW Aesthetic Clinic",
-          logo: {
-            "@type": "ImageObject",
-            url: `${mainUrl}images/cabang-banner.png`
-          }
-        },
-        mainEntityOfPage: {
-          "@type": "WebPage",
-          "@id": `${mainUrl}cabang`
-        },
-        breadcrumb: {
-            "@type": "BreadcrumbList",
-            itemListElement: [
-                {
-                "@type": "ListItem",
-                    position: 1,
-                    name: "Home",
-                    item: `${mainUrl}`
-                },
-                {
-                "@type": "ListItem",
-                position: 2,
-                    name: "Cabang",
-                    item: `${mainUrl}cabang`
-                }
-            ]
-        }
-    };
-
     return(
         <>
             <Head>
                 <title>Cabang | NMW Aesthetic Clinic</title>
                 <meta name="description" content="Alamat Cabang & Kantor NMW Aesthetic Clinic" />
-                <meta name="keywords" content="cabang NMW Clinic, lokasi NMW Clinic, klinik kecantikan terdekat, klinik NMW, klinik estetika terbaik, layanan kecantikan profesional, dokter kecantikan terpercaya, konsultasi kecantikan, perawatan kulit, perawatan wajah, klinik kesehatan kulit, klinik bedah plastik, alamat NMW Clinic, klinik anti-aging, klinik perawatan rambut, layanan estetika medis, cabang klinik kecantikan, konsultasi medis estetika, perawatan tubuh, perawatan kecantikan terdekat, solusi kecantikan, dokter kecantikan terbaik, klinik kecantikan Indonesia" />
-
-                <meta property="og:title" content="Cabang NMW Aesthetic Clinic"  />
+                <meta property="og:title" content="Cabang NMW Aesthetic Clinic" />
                 <meta property="og:description" content="Alamat Cabang & Kantor NMW Aesthetic Clinic" />
-                <meta property="og:type" content="website" />
-                <meta property="og:url" content={`${mainUrl}cabang`} />
-                <meta property="og:image" content={`${mainUrl}images/cabang-banner.png`} />
-
-                <meta name="twitter:card" content="summary_large_image" />
-                <meta name="twitter:title" content="Cabang NMW Aesthetic Clinic"  />
+                <meta property="og:type" content="Cabang NMW Aesthetic Clinic" />
+                <meta name="twitter:title" content="Cabang NMW Aesthetic Clinic" />
                 <meta name="twitter:description" content="Alamat Cabang & Kantor NMW Aesthetic Clinic" />
-                <meta name="twitter:image" content={`${mainUrl}images/cabang-banner.png`} />
-
-                <link rel="canonical" href={`${mainUrl}cabang`} />
-
-                <script type="application/ld+json">
-                {JSON.stringify(schemaData)}
-                </script>
+                <meta property="og:url" content="{{ url()->current() }}" />
+                <meta property="og:image" content="{{ asset('images/cabang-banner.png') }}" />
             </Head>
             <div className={banner.banner}>
                 <img src="images/cabang-banner.png" alt="Layanan Nmw Aesthetic Clinic"/>

@@ -17,7 +17,6 @@ export default function SubJenisLayanan() {
 
   const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
   const storageUrl = process.env.NEXT_PUBLIC_API_STORAGE_URL;
-  const mainUrl = process.env.NEXT_PUBLIC_API_MAIN_URL;
 
   useEffect(() => {
     const fetchSettings = async () => {
@@ -128,93 +127,24 @@ export default function SubJenisLayanan() {
     );
   }
 
-  const schemaData = {
-      "@context": "https://schema.org",
-      "@type": "WebPage",
-      name: `${serviceDetail.title} - NMW Aesthetic Clinic`,
-      description: `${serviceDetail.description}`,
-      url: `${mainUrl}layanan/${name}/${slug}/${serviceDetail.slug}`,
-      publisher: {
-        "@type": "Organization",
-        name: "NMW Aesthetic Clinic",
-        logo: {
-          "@type": "ImageObject",
-          url: `${storageUrl}/${settings.logo}`
-        }
-      },
-      mainEntityOfPage: {
-        "@type": "WebPage",
-        "@id": `${mainUrl}layanan/${name}/${slug}/${serviceDetail.slug}`
-      },
-      breadcrumb: {
-        "@type": "BreadcrumbList",
-        itemListElement: [
-          {
-            "@type": "ListItem",
-            position: 1,
-            name: "Beranda",
-            item: `${mainUrl}`
-          },
-          {
-            "@type": "ListItem",
-            position: 2,
-            name: "Layanan",
-            item: `${mainUrl}layanan`
-          },
-          {
-            "@type": "ListItem",
-            position: 3,
-            name: `${name}`,
-            item:  `${mainUrl}layanan/${name}`
-          },
-          {
-            "@type": "ListItem",
-            position: 4,
-            name: `${slug}`,
-            item: `${mainUrl}layanan/${name}/${slug}`
-          },
-          {
-            "@type": "ListItem",
-            position: 5,
-            name: `${serviceDetail.title}`,
-            item: `${mainUrl}layanan/${name}/${slug}/${serviceDetail.slug}`
-          }
-        ]
-      }
-  };
-
   return (
     <>
         <Head>
             <title>{serviceDetail.title} | NMW Aesthetic Clinic</title>
             <meta name="description" content={serviceDetail.description} />
-            <meta name="keywords" content="layanan medis, perawatan kulit, bedah plastik, konsultasi kesehatan, perawatan kecantikan, NMW Clinic, layanan kecantikan, perawatan wajah, estetika medis, klinik estetika, perawatan anti-aging, operasi plastik, perawatan rambut, perawatan tubuh, terapi kecantikan, klinik kecantikan NMW, dokter kecantikan, solusi kecantikan, layanan kecantikan medis, klinik bedah plastik, rejuvenasi kulit, konsultasi bedah plastik" />
-
             <meta property="og:title" content={serviceDetail.title} />
             <meta property="og:description" content={serviceDetail.description} />
-            <meta property="og:type" content="website" />
-            <meta property="og:url" content={`${mainUrl}layanan/${name}/${slug}/${serviceDetail.slug}`} />
-            <meta property="og:image" content={`${storageUrl}/${serviceDetail.image}`} />
-
-            <meta name="twitter:card" content="summary_large_image" />
+            <meta property="og:type" content="Layanan"/>
             <meta name="twitter:title" content={serviceDetail.title} />
             <meta name="twitter:description" content={serviceDetail.description} />
-            <meta name="twitter:image" content={`${storageUrl}/${serviceDetail.image}`} />
-
-            <link rel="canonical" href={`${mainUrl}layanan/${name}/${slug}/${serviceDetail.slug}`} />
-
-            <script type="application/ld+json">
-              {JSON.stringify(schemaData)}
-            </script>
         </Head>
-        
-        {/* Banner */}
-        <div className={banner.banner}>
-          <img
-            src={`${storageUrl}/${serviceDetail.image}`}
-            alt={serviceDetail.name || "Banner image"}
-          />
-        </div>
+      {/* Banner */}
+      <div className={banner.banner}>
+        <img
+          src={`${storageUrl}/${serviceDetail.image}`}
+          alt={serviceDetail.name || "Banner image"}
+        />
+      </div>
 
       {/* Section 1 */}
       <div className={`${styles.section_1} ${styles.section_1_sc}`}>

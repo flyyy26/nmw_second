@@ -5,7 +5,6 @@ import loadingStyles from "@/styles/Loading.module.css";
 import styles from "@/styles/Promo.module.css";
 import Link from 'next/link';
 import { FaCalendar } from "react-icons/fa";
-import Head from 'next/head';
 
 export default function DetailArtikel() {
     const router = useRouter();
@@ -16,7 +15,6 @@ export default function DetailArtikel() {
 
     const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
     const storageUrl = process.env.NEXT_PUBLIC_API_STORAGE_URL;
-    const mainUrl = process.env.NEXT_PUBLIC_API_MAIN_URL;
 
     useEffect(() => {
         if (title && promos.length > 0) {
@@ -114,69 +112,10 @@ export default function DetailArtikel() {
         return `${day} ${monthName} ${year}`;
     }
     
-    const schemaData = {
-        "@context": "https://schema.org",
-        "@type": "WebPage",
-        name: `Promo - NMW Aesthetic Clinic`,
-        description: `Dapatkan promo terbaik dari NMW Aesthetic Clinic untuk perawatan kecantikan dan kesehatan kulit Anda. Nikmati penawaran spesial untuk layanan medis, perawatan wajah, dan perawatan tubuh dengan harga terbaik. Jangan lewatkan promo eksklusif yang dirancang khusus untuk memenuhi kebutuhan kecantikan Anda!`,
-        url: `${mainUrl}${encodeURIComponent(promoDetail.title.replace(/\s+/g, '-').toLowerCase())}`,
-        publisher: {
-        "@type": "Organization",
-        name: "NMW Aesthetic Clinic",
-        logo: {
-            "@type": "ImageObject",
-            url: `${storageUrl}/${promoDetail.image}`
-        }
-        },
-        mainEntityOfPage: {
-        "@type": "WebPage",
-        "@id": `${mainUrl}${encodeURIComponent(promoDetail.title.replace(/\s+/g, '-').toLowerCase())}`
-        },
-        breadcrumb: {
-            "@type": "BreadcrumbList",
-            itemListElement: [
-                {
-                "@type": "ListItem",
-                    position: 1,
-                    name: "Home",
-                    item: `${mainUrl}`
-                },
-                {
-                "@type": "ListItem",
-                position: 2,
-                    name: "Promo",
-                    item: `${mainUrl}${encodeURIComponent(promoDetail.title.replace(/\s+/g, '-').toLowerCase())}`
-                }
-            ]
-        }
-    };
      
 
     return (
         <>
-        <Head>
-          <title>{promoDetail.title} | NMW Aesthetic Clinic</title>
-          <meta name="description" content="Dapatkan promo terbaik dari NMW Aesthetic Clinic untuk perawatan kecantikan dan kesehatan kulit Anda. Nikmati penawaran spesial untuk layanan medis, perawatan wajah, dan perawatan tubuh dengan harga terbaik. Jangan lewatkan promo eksklusif yang dirancang khusus untuk memenuhi kebutuhan kecantikan Anda!" />
-          <meta name="keywords" content="promo klinik kecantikan, promo perawatan kulit, diskon layanan medis, promo perawatan wajah, penawaran kecantikan NMW Clinic, promo estetika medis, potongan harga perawatan tubuh, promo perawatan rambut, diskon bedah plastik, penawaran khusus NMW Clinic, promo perawatan anti-aging, diskon rejuvenasi kulit, promo perawatan kecantikan NMW Clinic" />
-
-          <meta property="og:title" content="Promo NMW Aesthetic Clinic"  />
-          <meta property="og:description" content="Dapatkan promo terbaik dari NMW Aesthetic Clinic untuk perawatan kecantikan dan kesehatan kulit Anda. Nikmati penawaran spesial untuk layanan medis, perawatan wajah, dan perawatan tubuh dengan harga terbaik. Jangan lewatkan promo eksklusif yang dirancang khusus untuk memenuhi kebutuhan kecantikan Anda!" />
-          <meta property="og:type" content="website" />
-          <meta property="og:url" content={`${mainUrl}${encodeURIComponent(promoDetail.title.replace(/\s+/g, '-').toLowerCase())}`} />
-          <meta property="og:image" content={`${storageUrl}/${promoDetail.image}`} />
-
-          <meta name="twitter:card" content="summary_large_image" />
-          <meta name="twitter:title" content="Promo NMW Aesthetic Clinic" />
-          <meta name="twitter:description" content="Dapatkan promo terbaik dari NMW Aesthetic Clinic untuk perawatan kecantikan dan kesehatan kulit Anda. Nikmati penawaran spesial untuk layanan medis, perawatan wajah, dan perawatan tubuh dengan harga terbaik. Jangan lewatkan promo eksklusif yang dirancang khusus untuk memenuhi kebutuhan kecantikan Anda!" />
-          <meta name="twitter:image" content={`${storageUrl}/${promoDetail.image}`} />
-
-          <link rel="canonical" href={`${mainUrl}${encodeURIComponent(promoDetail.title.replace(/\s+/g, '-').toLowerCase())}`} />
-
-          <script type="application/ld+json">
-          {JSON.stringify(schemaData)}
-          </script>
-      </Head>
-
             <div className={banner.banner}>
                 <img src={`${storageUrl}/${promoDetail.image}`} alt={promoDetail.title} />
                 <h1>{promoDetail.title}</h1>

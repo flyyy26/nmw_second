@@ -30,7 +30,6 @@ export default function DetailArtikel() {
 
     const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
     const storageUrl = process.env.NEXT_PUBLIC_API_STORAGE_URL;
-    const mainUrl = process.env.NEXT_PUBLIC_API_MAIN_URL;
 
     useEffect(() => {
         if (title && articles.length > 0) {
@@ -338,82 +337,32 @@ export default function DetailArtikel() {
 
     console.log("products : " + articleDetail.products)
 
-    const schemaData = {
-        "@context": "https://schema.org",
-        "@type": "Article",
-        headline: `${articleDetail.title} - NMW Aesthetic Clinic`,
-        description: `${articleDetail.description}`,
-        url: `${mainUrl}artikel/${encodeURIComponent(articleDetail.title.replace(/\s+/g, '-').toLowerCase())}`,
-        publisher: {
-          "@type": "Organization",
-          name: "NMW Aesthetic Clinic",
-          logo: {
-            "@type": "ImageObject",
-            url: `${storageUrl}/${settings.logo}`
-          }
-        },
-        mainEntityOfPage: {
-          "@type": "Article",
-          "@id": `${mainUrl}artikel/${encodeURIComponent(articleDetail.title.replace(/\s+/g, '-').toLowerCase())}`
-        },
-        image: {
-          "@type": "ImageObject",
-          url: `${articleDetail.image}}`
-        },
-        author: {
-          "@type": "Person",
-          name: `${articleDetail.author}`
-        },
-        breadcrumb: {
-            "@type": "BreadcrumbList",
-            itemListElement: [
-              {
-                "@type": "ListItem",
-                position: 1,
-                name: "Beranda",
-                item: `${mainUrl}`
-              },
-              {
-                "@type": "ListItem",
-                position: 2,
-                name: "Cabang",
-                item: `${mainUrl}cabang`
-              },
-              {
-                "@type": "ListItem",
-                position: 3,
-                name: `${articleDetail.title}}`,
-                item: `${mainUrl}artikel/${encodeURIComponent(articleDetail.title.replace(/\s+/g, '-').toLowerCase())}`
-              }
-            ]
-          },
-        "datePublished": `${articleDetail.date}`, // Ganti dengan tanggal publikasi artikel
-        "dateModified": `${articleDetail.date}` // Ganti dengan tanggal update artikel jika ada
-    };
-
 
     return (
         <>
             <Head>
-                <title>{articleDetail.title} | NMW Aesthetic Clinic</title>
+                <title>{articleDetail.title} - NMW Aesthetic Clinic</title>
                 <meta name="description" content={articleDetail.description} />
-                <meta name="keywords" content={tags.join(', ')} />
-
+                <meta name="keywords" content={tags.join(', ')} /> {/* SEO meta untuk tags */}
                 <meta property="og:title" content={articleDetail.title} />
                 <meta property="og:description" content={articleDetail.description} />
                 <meta property="og:type" content="article" />
-                <meta property="og:url" content={`${mainUrl}artikel/${encodeURIComponent(articleDetail.title.replace(/\s+/g, '-').toLowerCase())}`} />
-                <meta property="og:image" content={articleDetail.image} />
-
-                <meta name="twitter:card" content="summary_large_image" />
                 <meta name="twitter:title" content={articleDetail.title} />
                 <meta name="twitter:description" content={articleDetail.description} />
-                <meta name="twitter:image" content={articleDetail.image} />
-
-                <link rel="canonical" href={`${mainUrl}artikel/${encodeURIComponent(articleDetail.title.replace(/\s+/g, '-').toLowerCase())}`}/>
-
                 <script type="application/ld+json">
-                {JSON.stringify(schemaData)}
+                    {JSON.stringify({
+                        '@context': 'https://schema.org',
+                        '@type': 'Article',
+                        headline: `${articleDetail.title}`,
+                        description: `${shortDescription}`,
+                        datePublished: `${articleDetail.created_at}`,
+                        dateModified: `${articleDetail.updated_at}`,
+                        image: `${articleDetail.image}`,
+                        author: {
+                        '@type': 'Person',
+                        name: 'Admin',
+                        },
+                    })}
                 </script>
             </Head>
             <div className={banner.banner}>

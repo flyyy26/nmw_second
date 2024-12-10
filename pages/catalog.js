@@ -6,31 +6,8 @@ import Head from "next/head";
 
 export default function Catalog(){
     const [catalogs, setCatalogs] = useState([]);
-    const [settings, setSettings] = useState([]);
-
     const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
-    const mainUrl = process.env.NEXT_PUBLIC_API_MAIN_URL;
     const storageUrl = process.env.NEXT_PUBLIC_API_STORAGE_URL;
-
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const response = await fetch(`${baseUrl}/setting`);
-                const data = await response.json();
-                console.log('Fetched data:', data);  // Log the entire response
-  
-                if (data && data.social_media) {
-                    setSettings(data); // Set the entire response object to settings
-                } else {
-                    console.error('No social_media data found:', data);
-                }
-            } catch (error) {
-                console.error('Error fetching settings:', error);
-            }
-        };
-  
-        fetchData();
-      }, []);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -50,66 +27,18 @@ export default function Catalog(){
         fetchData();
     }, []);
 
-    const schemaData = {
-        "@context": "https://schema.org",
-        "@type": "WebPage",
-        name: `Katalog - NMW Aesthetic Clinic`,
-        description: `Lihat dan download katalog NMW Aesthetic Clinic`,
-        url: `${mainUrl}catalog`,
-        publisher: {
-          "@type": "Organization",
-          name: "NMW Aesthetic Clinic",
-          logo: {
-            "@type": "ImageObject",
-            url: `${storageUrl}/${settings.logo}`
-          }
-        },
-        mainEntityOfPage: {
-          "@type": "WebPage",
-          "@id": `${mainUrl}catalog`
-        },
-        breadcrumb: {
-            "@type": "BreadcrumbList",
-            itemListElement: [
-                {
-                "@type": "ListItem",
-                    position: 1,
-                    name: "Home",
-                    item: `${mainUrl}`
-                },
-                {
-                "@type": "ListItem",
-                position: 2,
-                    name: "Katalog",
-                    item: `${mainUrl}catalog`
-                }
-            ]
-        }
-    };
-
-    return( 
+    return(
         <>
             <Head>
                 <title>Katalog | NMW Aesthetic Clinic</title>
                 <meta name="description" content="Lihat dan download katalog NMW Aesthetic Clinic" />
-                <meta name="keywords" content="katalog NMW Clinic, produk kecantikan, perawatan kulit, skincare terbaik, produk perawatan wajah, kosmetik profesional, perawatan tubuh, produk anti-aging, serum wajah, krim pelembab, tabir surya, masker wajah, produk perawatan rambut, suplemen kecantikan, kosmetik medis, krim malam, perawatan kulit sensitif, produk klinik kecantikan, skincare rekomendasi dokter, kosmetik terpercaya, produk kesehatan kulit, perawatan kecantikan lengkap, solusi kecantikan, katalog produk NMW" />
-
-                <meta property="og:title" content="Cabang NMW Aesthetic Clinic"  />
+                <meta property="og:title" content="Katalog" />
                 <meta property="og:description" content="Lihat dan download katalog NMW Aesthetic Clinic" />
-                <meta property="og:type" content="website" />
-                <meta property="og:url" content={`${mainUrl}catalog`} />
-                <meta property="og:image" content={`${mainUrl}images/catalogue-banner.png`} />
-
-                <meta name="twitter:card" content="summary_large_image" />
-                <meta name="twitter:title" content="Catalog NMW Aesthetic Clinic"  />
+                <meta property="og:type" content="Katalog" />
+                <meta name="twitter:title" content="Katalog" />
                 <meta name="twitter:description" content="Lihat dan download katalog NMW Aesthetic Clinic" />
-                <meta name="twitter:image" content={`${mainUrl}images/catalogue-banner.png`} />
-
-                <link rel="canonical" href={`${mainUrl}catalog`} />
-
-                <script type="application/ld+json">
-                {JSON.stringify(schemaData)}
-                </script>
+                <meta property="og:url" content="{{ url()->current() }}" />
+                <meta property="og:image" content="{{ asset('images/catalogue-banner.png') }}" />
             </Head>
             <div className={banner.banner}>
                 <img src="images/catalogue-banner.png" alt="Layanan Nmw Aesthetic Clinic"/>

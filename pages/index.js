@@ -23,12 +23,9 @@ export default function Home() {
   const [services, setServices] = useState([]);
   const [promos, setPromos] = useState([]);
   const [serviceDetails, setServiceDetails] = useState({});
-
   const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
   const storageUrl = process.env.NEXT_PUBLIC_API_STORAGE_URL;
-  const mainUrl = process.env.NEXT_PUBLIC_API_MAIN_URL;
-
-  const [isLoading, setIsLoading] = useState(true);
+  const url = process.env.NEXT_PUBLIC_API_URL;
 
   useEffect(() => {
     const fetchData = async () => {
@@ -108,8 +105,6 @@ export default function Home() {
             }
         } catch (error) {
             console.error('Error fetching services or details:', error);
-        } finally {
-          setIsLoading(false);
         }
     };
 
@@ -128,8 +123,6 @@ export default function Home() {
             }
         } catch (error) {
             console.error('Error fetching banners:', error);
-        } finally {
-          setIsLoading(false);
         }
     };
 
@@ -149,18 +142,18 @@ export default function Home() {
     "@type": "WebPage",
     name: "Home - NMW Aesthetic Clinic",
     description: "NMW Adalah merek Aesthetic, Skincare, Dermatology and Wellness Clinic yang berbasis di Jakarta, Indonesia. Jam Operasional Klinik 09:00 - 20:00",
-    url: `${mainUrl}`,
+    url: "https://nmw-clinic.vercel.app/",
     publisher: {
       "@type": "Organization",
       name: "NMW Aesthetic Clinic",
       logo: {
         "@type": "ImageObject",
-        url: `${storageUrl}/${settings.logo}`
+        url: `${settings.logo}`
       }
     },
     mainEntityOfPage: {
       "@type": "WebPage",
-      "@id": `${mainUrl}`
+      "@id": "https://nmw-clinic.vercel.app/"
     },
     breadcrumb: {
       "@type": "BreadcrumbList",
@@ -168,7 +161,7 @@ export default function Home() {
         "@type": "ListItem",
         position: 1,
         name: "Home",
-        item: `${mainUrl}`
+        item: "https://nmw-clinic.vercel.app/"
       }]
     }
   };
@@ -178,29 +171,10 @@ export default function Home() {
   return (
     <>
       <Head>
-          <title>Official NMW - Klinik Aesthetic, Skincare, Dermatologi Jakarta</title>
-          <meta name="description" content="NMW Adalah merek Aesthetic, Skincare, Dermatology and Wellness Clinic yang berbasis di Jakarta, Indonesia. Jam Operasional Klinik 09:00 - 20:00" />
-          <meta name="keywords" content="klinik kesehatan, layanan medis, konsultasi kesehatan, NMW Clinic, perawatan medis, bedah plastik" />
-          
-          <meta property="og:title" content="NMW Aesthetic Clinic" />
-          <meta property="og:image" content={`${storageUrl}/${settings.favicon}`} />
-          <meta property="og:url" content={mainUrl} />
-          <meta property="og:type" content="website" />
-          
-          <meta name="twitter:card" content="summary_large_image" />
-          <meta name="twitter:title" content="NMW Aesthetic Clinic" />
-          <meta name="twitter:description" content={settings.meta_description} />
-          <meta name="twitter:image" content={`${storageUrl}/${settings.favicon}`} />
-
-          <link rel="canonical" href={mainUrl} />
-
-          <script type="application/ld+json">
-            {JSON.stringify(schemaData)}
-          </script>
+        <script type="application/ld+json">
+          {JSON.stringify(schemaData)}
+        </script>
       </Head>
-      {isLoading ? (
-            <div className="skeleton-logo skeleton-logo-100 skeleton-logo-banner" />
-        ) : (
       <Swiper
         pagination={{
           clickable: true,
@@ -228,12 +202,12 @@ export default function Home() {
           </SwiperSlide>
         ))}
       </Swiper>
-      )}
       <div className={styles.section_1}>
           <div className={styles.heading_section}>
               <h2><font>Layanan</font> Kami</h2>
           </div>
           <div className={styles.slide_section_1}>
+          {firstHalf.length > 0 &&
               <Swiper
                   dir="rtl"
                   navigation={true}
@@ -258,20 +232,18 @@ export default function Home() {
                                       </Link>
                                   </div>
                                   <div className={styles.box_service_image}>
-                                    {isLoading ? (
-                                        <div className="skeleton-logo skeleton-logo-100 skeleton-logo-fit" />
-                                    ) : (
                                       <img
                                           src={`${storageUrl}/${serviceDetails[service.id]?.image_2 || "placeholder.png"}`}
                                           alt={service.name}
                                       />
-                                    )}
                                   </div>
                               </div>
                           </div>
                       </SwiperSlide>
                   ))}
               </Swiper>
+              
+          }
 
               <Swiper
                   navigation={true}
